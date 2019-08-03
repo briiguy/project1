@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Urban</title>
+</head>
+
+<body>
+  
+  <div id="word"></div>
+  <div id="word2"></div>
+
+  <div id="txt">"My text is long and wise and it consumes a lot of interwebs."</div>
+  <div id="out"></div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    
+    
+    var queryURL = "http://api.urbandictionary.com/v0/define?term=punk";
+
+    
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+
+     
+      
+      console.log(queryURL);
+
+      
+
+
+      console.log(response);
+
+      $("#word").text(response.list[0].definition);
+
+      for(var i=0; i<response.list.length; i++) {
+        
+        var word = $("<div id='def'>");
+        word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+        $("#word2").append(word);
+        
+
+      }
+
+
+
+      function get_selection() {
+
+        var txt = '';
+        
+        if (window.getSelection) {
+            txt = window.getSelection().toString();
+        } else if (document.selection) {
+            txt = document.selection.createRange().text;
+        };
+        
+        document.getElementById("out").innerHTML = txt;
+      
+      };
+
+        document.getElementById("word2").onclick = get_selection;
+
+      
+
+    });
+
+
+
+  </script>
+</body>
+
+</html>
