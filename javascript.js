@@ -1,21 +1,6 @@
 
 
 
-
-
-$(document.body).append("<h1>yeah kool</h1>")
-
-
-
-
-
-
-
-
-
-
-
-
 //urban dictonary api
 var q = 'memer'
 var query = 'http://api.urbandictionary.com/v0/define?term=' + q
