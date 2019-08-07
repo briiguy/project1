@@ -1,3 +1,6 @@
+.form-control{
+    background: yellow;
+}
 .popup {
     position: relative;
     display: inline-block;
