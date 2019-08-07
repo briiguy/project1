@@ -1,5 +1,6 @@
-#artist-input,#song-input{
+#artist-input,#song-input,#song-search{
     background: yellow;
+    font-size: 22px;
 }
 
 #song-search{
@@ -60,6 +61,13 @@
   }
 
   #word3{
-    background: white;
+    background: lavender;
     color: black;
+    font-size: 22px;
+    text-align: center;
+    white-space: pre;
+  }
+
+  label{
+    font-size: 22px;
   }
