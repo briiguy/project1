@@ -111,15 +111,13 @@
         </a>
       </div>
       <div class="panel-body">
-          <form class="form-inline">
-              <div class="form-group">
-                  <label for="search-query">Song</label>
-                  <input type="text" id="song-query" class="form-control" placeholder="Search on musixmatch">
-                  <label for="search-query">Artist</label>
-                  <input type="text" id="artist-query" class="form-control" placeholder="Search on musixmatch">
-                  <button type="submit" id="search-button" class="btn btn-primary btn-xs">Search + Add to Urbanlyrics</button>
-              </div>
-          </form>
+        <form id="lyrics-form">
+          <label for="artist-input">Add an artist!</label>
+          <input type="text" id="artist-input">
+          <label for="song-input">Add a song!</label>
+          <input type="text" id="song-input">
+          <input id="song-search" type="submit" value="Search">
+        </form>
           <div id="youtube-api-container"></div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
