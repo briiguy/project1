@@ -1,6 +1,10 @@
 #artist-input,#song-input{
     background: yellow;
 }
+
+#song-search{
+  background: violet;
+}
 .popup {
     position: relative;
     display: inline-block;
