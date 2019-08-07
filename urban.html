@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Urban</title>
+</head>
+
+<body>
+  
+  <div id="word"></div>
+  <div id="word2">Blah Blah Blah</div>
+<!--   ============================================================== -->
+  
+  <form id="lyrics-form">
+            <label for="artist-input">Add an artist!</label>
+            <input type="text" id="artist-input">
+            <label for="song-input">Add a song!</label>
+            <input type="text" id="song-input">
+            <input id="song-search" type="submit" value="Search">
+  </form>
+  
+  
+  
+<!--   ============================================================== -->
+  <div id="lyrics"></div>
+  <div id="output"></div>
+  
+  <div class="popup" onclick="myFunction()">Click me!
+      <span class="popuptext" id="myPopup">Popup text...</span>
+  </div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    
+    
+    
+    // ============================================================
+    
+//     var artist = "";
+//     var song = "";
+    
+//     var corsURL2 = "https://cors-anywhere.herokuapp.com/";
+//     var queryLyricsURL = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
+    
+//     $("#song-search").on("click", function(event) {
+//           event.preventDefault();
+//           artist = $("#artist-input").val().trim();
+//           song = $("#song-input").val().trim();
+      
+//           console.log(artist);
+//           console.log(song);
+      
+      
+//           $.ajax({
+            
+//               url: queryLyricsURL,
+//               method: "GET"
+            
+//           }).then(function(response) {
+//               // console.log(queryUrbanURL);
+//               // console.log(response);
+//               // $("#word").text(response.list[0].definition);
+//               event.preventDefault();
+//               $("#word2").empty();
+//               $("#myPopup").empty();   
+//               for(var i=0; i<5; i++) {
+//                   var word = $("<div id='def'>");
+//                   word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+//                   $("#word").append(word);
+//                   $("#myPopup").append(word);
+//               };
+          
+      
+          
+//           });
+//     };
+    
+    
+    // ============================================================
+    
+    var queryUrbanURL = "https://api.urbandictionary.com/v0/define?term=punk";
+    
+    $.ajax({
+        url: queryUrbanURL,
+        method: "GET"
+    }).then(function(response) {
+        // console.log(queryUrbanURL);
+        // console.log(response);
+        // $("#word").text(response.list[0].definition);
+        
+        for(var i=0; i<5; i++) {
+        
+            var word = $("<div id='def'>");
+            word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+            $("#word").append(word);
+            $("#word").append("<br>");
+          
+        };      
+    });
+    
+    
+    
+    var corsURL = "https://cors-anywhere.herokuapp.com/";
+    var queryLyricsURL = corsURL+"https://api.lyrics.ovh/v1/post%20malone/wow.";
+    
+    $.ajax({
+        url: queryLyricsURL,
+        method: "GET"
+    }).then(function(response) {
+        // console.log(queryLyricsURL);
+        // console.log(response);
+        // console.log(response.lyrics);
+        $("#lyrics").text(response.lyrics);
+        
+    });
+    
+    
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    };
+
+
+    
+    function get_selection() {
+      
+        var txt = '';
+
+        $("#myPopup").empty();
+      
+        if (window.getSelection) {
+            txt = window.getSelection().toString();
+        } else if (document.selection) {
+            txt = document.selection.createRange().text;
+        };
+      
+        document.getElementById("output").innerHTML = txt;
+      
+      
+        var queryUrbanURL = "https://api.urbandictionary.com/v0/define?term="+txt;
+      
+        
+    
+        $.ajax({
+            url: queryUrbanURL,
+            method: "GET"
+        }).then(function(response) {
+            // console.log(queryUrbanURL);
+            // console.log(response);
+            // $("#word").text(response.list[0].definition);
+           
+          
+            $("#word").empty();
+            
+          
+            for(var i=0; i<5; i++) {
+                var word = $("<div id='def'>");
+                var wordTwo = $("<div id='def'>");
+                word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                wordTwo.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                
+                
+                $("#word2").append(wordTwo);
+                $("#myPopup").append(word);
+              
+            };   
+          
+        //   alert($("#myPopup").text());
+        //   alert($("#word2").text());
+            
+            myFunction();
+
+        
+        
+           
+          
+          
+         
+          
+          
+          
+        
+      });
+      
+      
+        
+    };
+    
+    
+    
+    document.getElementById("word").onclick = get_selection;
+    document.getElementById("lyrics").onclick = get_selection;
+   
+    
+    
+    
+    
+    
+  </script>
+</body>
+
+</html>
