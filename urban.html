@@ -45,9 +45,6 @@
     
 // ============================================================
 // The function to search for the artist & song with AJAX call to lyrics.ovh.
-
-
-
     var artist = "";
     var song = "";
     
@@ -58,7 +55,6 @@
           event.preventDefault();
           artist = $("#artist-input").val().trim().split(' ').join('%20');
           song = $("#song-input").val().trim().split(' ').join('%20');
-
           queryLyricsURL2 = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
       
           console.log(artist);
@@ -73,9 +69,6 @@
             
           }).then(function(response) {
             $("#word3").text(response.lyrics);
-
-
-
           });
           
       
@@ -86,25 +79,17 @@
     
 //=============================================================
 //function  for the pop-up
-
-
     
     
     function myFunction() {
         var popup = document.getElementById("myPopup");
         popup.classList.toggle("show");
     };
-
-
     
 //function  for the selecting of the word.
-
-
-
     function get_selection() {
       
         var txt = '';
-
         $("#myPopup").empty();
       
         if (window.getSelection) {
@@ -118,11 +103,7 @@
       
         var queryUrbanURL = "https://api.urbandictionary.com/v0/define?term="+txt;
       
-
-
-
 //AJAX call to GET top 5 Urbandictionary.com definitions for selected word.
-
     
         $.ajax({
             url: queryUrbanURL,
@@ -154,8 +135,6 @@
     
     
 //making the divs clickable.
-
-
     document.getElementById("word").onclick = get_selection;
     document.getElementById("word3").onclick = get_selection;
     document.getElementById("lyrics").onclick = get_selection;
