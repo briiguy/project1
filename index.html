@@ -23,80 +23,14 @@
         <div class="carousel-inner">
           <div class="item active">
             <img src="images/newyork.jpg" alt="newyork">
-            <div class="carousel-content"></div>
-            <p>There comes a time
-              When we heed a certain call
-              When the world must come together as one
-              There are people dying
-              Oh, and it's time to lend a hand to life
-              The greatest gift of all
-              We can't go on
-              Pretending day-by-day
-              That someone, somewhere soon make a change
-              We're all a part of God's great big family
-              And the truth, you know, love is all we need
-              We are the world
-              We are the children
-              We are the ones who make a brighter day, so let's start giving
-              There's a choice we're making
-              We're saving our own lives
-              It's true we'll make a better day, just you and me
-              Oh, send them your heart
-              So they know that someone cares
-              And their lives will be stronger and free
-              As God has shown us by turning stones to bread
-              And so we all must lend a helping hand
-              We are the world
-              We are…</p>
-            <div class="carousel-caption"></div>
-            <h3>Yeah Boi!!!</h3>
           </div>
       
           <div class="item">
             <img src="images/old.jpg" alt="old">
-            <div class="carousel-content"></div>
-            <p>Amazing Grace, How sweet the sound
-              That saved a wretch like me
-              I once was lost, but now am found
-              T'was blind but now I see
-              T'was Grace that taught my heart to fear
-              And Grace, my fears relieved
-              How precious did that grace appear
-              The hour I first believed
-              Through many dangers, toils and snares
-              We have already come.
-              T'was grace that brought us safe thus far
-              And grace will lead us home,
-              And…</p>
-              <div class="carousel-caption"></div>
-            <h3>Amazing Grace</h3>
           </div>
       
           <div class="item">
             <img src="images/tongue.jpg" alt="tongue">
-            <div class="carousel-content"></div>
-            <p>Me and Kurt feel the same, too much pleasure is pain
-              My girl spites me in vain, all I do is complain
-              She need something to change, need to take off the edge
-              So fuck it all tonight
-              And don't tell me to shut up
-              When you know you talk too much
-              But you don't got shit to say
-              I want you out of my head
-              I want you out of my bedroom tonight (bedroom)
-              There's no way I can save you (save you)
-              'Cause I need to be saved, too
-              I'm no good at goodbyes
-              We're both actin' insane but too stubborn to change
-              Now I'm drinkin' again, 80 proof in my veins
-              And my fingertip stained, looking over the edge
-              Don't fuck with me tonight
-              Say you needed this heart and you got it (got it)
-              Turns out that it wasn't what you wanted (wanted)
-              And we wouldn't let go and we lost it (lost it)
-              Now I'm…</p>
-              <div class="carousel-caption"></div>
-              <h3>Goodbyes</h3>
           </div>
         </div>
       
@@ -111,6 +45,9 @@
         </a>
       </div>
       <div class="panel-body">
+
+        <div id="word"></div>
+        <div id="word3"></div>  
         <form id="lyrics-form">
           <label for="artist-input">Add an artist!</label>
           <input type="text" id="artist-input">
@@ -118,9 +55,129 @@
           <input type="text" id="song-input">
           <input id="song-search" type="submit" value="Search">
         </form>
+
+        <!-- Output and div for the pop-up. -->
+
+
+  <div id="lyrics"></div>
+  <div id="output"></div>
+  
+  <div class="popup" onclick="myFunction()">Click me!
+      <span class="popuptext" id="myPopup">Popup text...</span>
+  </div>
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    
           <div id="youtube-api-container"></div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+    
+    
+        // ============================================================
+        // The function to search for the artist & song with AJAX call to lyrics.ovh.
+            var artist = "";
+            var song = "";
+            
+            var corsURL2 = "https://cors-anywhere.herokuapp.com/";
+            var queryLyricsURL2 = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
+            
+            $("#song-search").on("click", function(event) {
+                  event.preventDefault();
+                  artist = $("#artist-input").val().trim().split(' ').join('%20');
+                  song = $("#song-input").val().trim().split(' ').join('%20');
+                  queryLyricsURL2 = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
+              
+                  console.log(artist);
+                  console.log(song);
+                  console.log(queryLyricsURL2);
+              
+              
+                  $.ajax({
+                    
+                      url: queryLyricsURL2,
+                      method: "GET"
+                    
+                  }).then(function(response) {
+                    $("#word3").text(response.lyrics);
+                  });
+                  
+              
+                  
+            });
+            
+            
+            
+        //=============================================================
+        //function  for the pop-up
+            
+            
+            function myFunction() {
+                var popup = document.getElementById("myPopup");
+                popup.classList.toggle("show");
+            };
+            
+        //function  for the selecting of the word.
+            function get_selection() {
+              
+                var txt = '';
+                $("#myPopup").empty();
+              
+                if (window.getSelection) {
+                    txt = window.getSelection().toString();
+                } else if (document.selection) {
+                    txt = document.selection.createRange().text;
+                };
+              
+                document.getElementById("output").innerHTML = txt;
+              
+              
+                var queryUrbanURL = "https://api.urbandictionary.com/v0/define?term="+txt;
+              
+        //AJAX call to GET top 5 Urbandictionary.com definitions for selected word.
+            
+                $.ajax({
+                    url: queryUrbanURL,
+                    method: "GET"
+                }).then(function(response) {           
+                  
+                    $("#word").empty();
+                    
+                  
+                    for(var i=0; i<5; i++) {
+                        var word = $("<div id='def'>");
+                        var wordTwo = $("<div id='def'>");
+                        word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                        wordTwo.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                        
+                        
+                        $("#word2").append(wordTwo);
+                        $("#myPopup").append(word);
+                      
+                    };   
+                  
+              
+                    myFunction();  
+                  
+                  
+              });
+              
+            };
+            
+            
+        //making the divs clickable.
+            document.getElementById("word").onclick = get_selection;
+            document.getElementById("word3").onclick = get_selection;
+            document.getElementById("lyrics").onclick = get_selection;
+           
+            
+            
+            
+            
+            
+          </script>
 </body>
 <footer>
     <script src="oby.js"></script>
