@@ -58,3 +58,8 @@
     from {opacity: 0;}
     to {opacity:1 ;}
   }
+
+  #word3{
+    background: url(images/bright.jpg);
+    color: green;
+  }
