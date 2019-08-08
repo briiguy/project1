@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Urban</title>
+</head>
+
+<body>
+  
+  <div id="word"></div>
+  <div id="word3"></div>
+
+<!--   ============================================================== -->
+  
+<!-- Form for Artist and song search. -->
+
+  <form id="lyrics-form">
+            <label for="artist-input">Add an artist!</label>
+            <input type="text" id="artist-input">
+            <label for="song-input">Add a song!</label>
+            <input type="text" id="song-input">
+            <input id="song-search" type="submit" value="Search">
+  </form>
+  
+  
+  
+<!--   ============================================================== -->
+<!-- Output and div for the pop-up. -->
+
+
+  <div id="lyrics"></div>
+  <div id="output"></div>
+  
+  <div class="popup" onclick="myFunction()">Click me!
+      <span class="popuptext" id="myPopup">Popup text...</span>
+  </div>
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    
+    
+    
+// ============================================================
+// The function to search for the artist & song with AJAX call to lyrics.ovh.
+    var artist = "";
+    var song = "";
+    
+    var corsURL2 = "https://cors-anywhere.herokuapp.com/";
+    var queryLyricsURL2 = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
+    
+    $("#song-search").on("click", function(event) {
+          event.preventDefault();
+          artist = $("#artist-input").val().trim().split(' ').join('%20');
+          song = $("#song-input").val().trim().split(' ').join('%20');
+          queryLyricsURL2 = corsURL2 + "https://api.lyrics.ovh/v1/" + artist + "/" + song;
+      
+          console.log(artist);
+          console.log(song);
+          console.log(queryLyricsURL2);
+      
+      
+          $.ajax({
+            
+              url: queryLyricsURL2,
+              method: "GET"
+            
+          }).then(function(response) {
+            $("#word3").text(response.lyrics);
+          });
+          
+      
+          
+    });
+    
+    
+    
+//=============================================================
+//function  for the pop-up
+    
+    
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    };
+    
+//function  for the selecting of the word.
+    function get_selection() {
+      
+        var txt = '';
+        $("#myPopup").empty();
+      
+        if (window.getSelection) {
+            txt = window.getSelection().toString();
+        } else if (document.selection) {
+            txt = document.selection.createRange().text;
+        };
+      
+        document.getElementById("output").innerHTML = txt;
+      
+      
+        var queryUrbanURL = "https://api.urbandictionary.com/v0/define?term="+txt;
+      
+//AJAX call to GET top 5 Urbandictionary.com definitions for selected word.
+    
+        $.ajax({
+            url: queryUrbanURL,
+            method: "GET"
+        }).then(function(response) {           
+          
+            $("#word").empty();
+            
+          
+            for(var i=0; i<5; i++) {
+                var word = $("<div id='def'>");
+                var wordTwo = $("<div id='def'>");
+                word.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                wordTwo.text("definition "+ (i+1) + ":    " + response.list[i].definition);
+                
+                
+                $("#word2").append(wordTwo);
+                $("#myPopup").append(word);
+              
+            };   
+          
+      
+            myFunction();  
+          
+          
+      });
+      
+    };
+    
+    
+//making the divs clickable.
+    document.getElementById("word").onclick = get_selection;
+    document.getElementById("word3").onclick = get_selection;
+    document.getElementById("lyrics").onclick = get_selection;
+   
+    
+    
+    
+    
+    
+  </script>
+</body>
+
+</html>
