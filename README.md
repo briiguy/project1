@@ -17,5 +17,5 @@ Here is the link to check it out: https://obygirl81.github.io/project1/
 
 ### Screenshot
 ##### Homepage
-![Screenshot of home page](https://obygirl81.github.io/project1/)
+![Screenshot of home page](https://github.com/briiguy/project1/blob/master/images/Screen%20Shot%202019-10-14%20at%202.49.52%20PM.png)
 
